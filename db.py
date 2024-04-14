@@ -159,4 +159,32 @@ def getSaved_recipes(id_user):
 			conn.close()
 
 
+def add_recipe(recipe):
+	try:		
+		with getConnection() as conn:
+			with conn.cursor() as cur:
+				query = "INSERT INTO SavedRecipe VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING *"
+				cur.execute(query, [recipe["id"], recipe["name"], recipe["preparation"], recipe["prepTime"], recipe["type"], recipe["picture"], recipe["idUser"], recipe["idRec"]])
+				recipe = None
+				recipe = cur.fetchone()
+
+				recipe = {
+					"id": recipe[0],
+					"name": recipe[1],
+					"preparation": recipe[2],
+					"prepTime": recipe[3],
+					"type": recipe[4],
+					"picture": recipe[5],
+					"id_user": recipe[6],
+					"id_recipe": recipe[7],
+					}
+				conn.commit()
+				return recipe
+	except (Exception, psycopg2.Error) as error:
+		print("Error while connecting to PostgreSQL", error)
+	finally:
+		if conn:
+			cur.close()
+			conn.close()
+
 
