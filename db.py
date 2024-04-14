@@ -83,3 +83,125 @@ def add_user(user):
 			conn.close()
 		return user
 
+def getRecipe(id_recipe):
+	try:
+		with getConnection() as conn:
+			with conn.cursor() as cur:
+				query="SELECT * FROM SavedRecipe WHERE id = %s"
+				cur.execute(query, [id_recipe])
+				recipe = cur.fetchone()
+				recipe_id = None
+				if recipe:
+					recipe_id = recipe[7]
+
+				recipe = {
+					"id": recipe[0],
+					"name": recipe[1],
+					"preparation": recipe[2],
+					"prepTime": recipe[3],
+					"type": recipe[4],
+					"picture": recipe[5],
+					"id_recipe": recipe[7],
+					"ingredients": []
+				}
+
+				queryRecipeIngredient = "SELECT * FROM RecipeIngredient WHERE idRec = %s"
+				cur.execute(queryRecipeIngredient, [recipe_id])
+				ingredients = cur.fetchall()
+				id_ingredients = None
+
+				for ingredient in ingredients:
+					id_ingredients.append(ingredient[0])
+
+
+				for ID in id_ingredients:
+					queryIngredient = "SELECT * FROM Ingredient WHERE id = %s"
+					cur.execute(queryIngredient, [ID])
+					row = cur.fetchone()
+					if row:
+						recipe["ingredients"].append(row[1])
+
+	except (Exception, psycopg2.Error) as error:
+		print("Error while connecting to PostgreSQL", error)
+	finally:
+		if conn:
+			cur.close()
+			conn.close()
+		return recipe
+
+
+def getSaved_recipes(id_user):
+	try:		
+		with getConnection() as conn:
+			with conn.cursor() as cur:
+				query = "SELECT * FROM SavedRecipe WHERE idUser = %s"
+				cur.execute(query, [id_user])
+				rows = cur.fetchall()
+				recipes = None
+
+				for recipe in rows:
+					recipe = {
+						"id": recipe[0],
+						"name": recipe[1],
+						"preparation": recipe[2],
+						"prepTime": recipe[3],
+						"type": recipe[4],
+						"picture": recipe[5],
+						"id_recipe": recipe[7],
+					}
+					recipes.append(recipe)
+				return recipes
+	except (Exception, psycopg2.Error) as error:
+		print("Error while connecting to PostgreSQL", error)
+	finally:
+		if conn:
+			cur.close()
+			conn.close()
+
+
+def add_recipe(recipe):
+	try:		
+		with getConnection() as conn:
+			with conn.cursor() as cur:
+				query = "INSERT INTO SavedRecipe VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING *"
+				cur.execute(query, [recipe["id"], recipe["name"], recipe["preparation"], recipe["prepTime"], recipe["type"], recipe["picture"], recipe["idUser"], recipe["idRec"]])
+				recipe = None
+				recipe = cur.fetchone()
+
+				recipe = {
+					"id": recipe[0],
+					"name": recipe[1],
+					"preparation": recipe[2],
+					"prepTime": recipe[3],
+					"type": recipe[4],
+					"picture": recipe[5],
+					"id_user": recipe[6],
+					"id_recipe": recipe[7],
+					}
+				conn.commit()
+				return recipe
+	except (Exception, psycopg2.Error) as error:
+		print("Error while connecting to PostgreSQL", error)
+	finally:
+		if conn:
+			cur.close()
+			conn.close()
+
+
+def remove_recipe(id_recipe):
+	try:		
+		with getConnection() as conn:
+			with conn.cursor() as cur:
+				query = "DELETE FROM SavedRecipe WHERE id = %s"
+				cur.execute(query, [id_recipe])
+				conn.commit()
+				value = None
+                value = len(cur.fetchall()) > 0
+
+	except (Exception, psycopg2.Error) as error:
+		print("Error while connecting to PostgreSQL", error)
+	finally:
+		if conn:
+			cur.close()
+			conn.close()
+		return value
