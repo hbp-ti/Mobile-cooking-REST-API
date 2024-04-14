@@ -192,6 +192,9 @@ def remove_recipe(id_recipe):
 		with getConnection() as conn:
 			with conn.cursor() as cur:
 				query = "DELETE FROM SavedRecipe WHERE id = %s"
+				cur.execute(query, [id_recipe])
+				conn.commit()
+
 				
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
