@@ -188,15 +188,3 @@ def add_recipe(recipe):
 			conn.close()
 
 
-def remove_recipe(id_recipe):
-	try:		
-		with getConnection() as conn:
-			with conn.cursor() as cur:
-			
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
-	finally:
-		if conn:
-			cur.close()
-			conn.close()
-
