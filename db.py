@@ -197,7 +197,6 @@ def remove_recipe(id_recipe):
 				conn.commit()
 
 				rows_deleted = cur.rowcount
-				value = None
                 value = rows_deleted > 0
 
 	except (Exception, psycopg2.Error) as error:
