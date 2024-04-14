@@ -17,12 +17,12 @@ def login(username, password):
 					return None
 				user = {
 					"id": userRow[0],
-					"username": userRow[5], 
+					"username": userRow[5],
 				}
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
 	finally:
-		if(conn):
+		if conn:
 			cur.close()
 			conn.close()
 		return user
@@ -37,10 +37,10 @@ def user_exists(user):
 	except (Exception, psycopg2.Error) as error:
 		print ("Error while connecting to PostgreSQL", error)
 	finally:
-		if(conn):
-            cur.close()
-            conn.close()
-    return count > 0
+		if conn:
+			cur.close()
+			conn.close()
+	return count > 0
 
 def get_user(username):
 	try:
@@ -57,7 +57,7 @@ def get_user(username):
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
 	finally:
-		if(conn):
+		if conn:
 			cur.close()
 			conn.close()
 		return user
@@ -66,7 +66,7 @@ def add_user(user):
 	try:
 		with getConnection() as conn:
 			with conn.cursor() as cur:
-				query = "INSERT INTO Users (name, email, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf'))) RETURNING *" 
+				query = "INSERT INTO Users (name, email, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf'))) RETURNING *"
 				cur.execute(query, [user["name"], user["email"], user["username"], user["password"]])
 				conn.commit()
 				userRow = cur.fetchone()
@@ -78,7 +78,7 @@ def add_user(user):
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
 	finally:
-		if(conn):
+		if conn:
 			cur.close()
 			conn.close()
 		return user
