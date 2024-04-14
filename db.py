@@ -195,7 +195,8 @@ def remove_recipe(id_recipe):
 				cur.execute(query, [id_recipe])
 				conn.commit()
 
-				
+				rows_deleted = cur.rowcount
+
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
 	finally:
