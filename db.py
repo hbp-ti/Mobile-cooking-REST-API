@@ -87,12 +87,9 @@ def getRecipe(id_recipe):
 	try:
 		with getConnection() as conn:
 			with conn.cursor() as cur:
-				query="SELECT * FROM SavedRecipe WHERE id = %s"
+				query="SELECT * FROM Recipe WHERE id = %s"
 				cur.execute(query, [id_recipe])
 				recipe = cur.fetchone()
-				recipe_id = None
-				if recipe:
-					recipe_id = recipe[7]
 
 				recipe = {
 					"id": recipe[0],
@@ -101,25 +98,8 @@ def getRecipe(id_recipe):
 					"prepTime": recipe[3],
 					"type": recipe[4],
 					"picture": recipe[5],
-					"id_recipe": recipe[7],
-					"ingredients": []
+					"ingredients": recipe[6],
 				}
-
-				queryRecipeIngredient = "SELECT * FROM RecipeIngredient WHERE idRec = %s"
-				cur.execute(queryRecipeIngredient, [recipe_id])
-				ingredients = cur.fetchall()
-				id_ingredients = None
-
-				for ingredient in ingredients:
-					id_ingredients.append(ingredient[0])
-
-
-				for ID in id_ingredients:
-					queryIngredient = "SELECT * FROM Ingredient WHERE id = %s"
-					cur.execute(queryIngredient, [ID])
-					row = cur.fetchone()
-					if row:
-						recipe["ingredients"].append(row[1])
 
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
@@ -147,6 +127,7 @@ def getSaved_recipes(id_user):
 						"prepTime": recipe[3],
 						"type": recipe[4],
 						"picture": recipe[5],
+						"ingredients": recipe[6],
 						"id_recipe": recipe[7],
 					}
 					recipes.append(recipe)
@@ -175,8 +156,9 @@ def add_recipe(recipe):
 					"prepTime": recipe[3],
 					"type": recipe[4],
 					"picture": recipe[5],
-					"id_user": recipe[6],
-					"id_recipe": recipe[7],
+					"ingredients": recipe[6],
+					"id_user": recipe[7],
+					"id_recipe": recipe[8],
 					}
 				conn.commit()
 				return recipe
