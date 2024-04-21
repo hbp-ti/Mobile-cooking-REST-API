@@ -93,7 +93,7 @@ def update_user(id_user):
         return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
     if (db.user_exists(data)):
-    return jsonify({"error": "user already exists"}), BAD_REQUEST_CODE
+        return jsonify({"error": "user already exists"}), BAD_REQUEST_CODE
 
     user = db.change_user(id_user, data)
 
