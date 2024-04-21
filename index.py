@@ -17,23 +17,41 @@ def home():
     return "Welcome to API!"
 
 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    if "username" not in data or "password" not in data:
+        return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
+
+    user = db.login(data['username'], data["password"])
+
+    if user is None:
+        return jsonify({"error": "Check credentials"}), NOT_FOUND_CODE
+
+    token = jwt.encode(
+        {'user_id': user['id'], 'exp': datetime.utcnow() + timedelta(minutes=10)}, app.config['SECRET_KEY'], 'HS256')
+
+    user["token"] = token.decode('UTF-8')
+    #user["token"] = token
+    return jsonify(user), OK_CODE
 
 
-
-@app.route("/changeUser/<int:id_user>", methods=['POST'])
-@auth_required
-def update_user(id_user):
+@app.route("/register", methods=['POST'])
+def register():
     data = request.get_json()
 
     if "name" not in data or "email" not in data or "username" not in data or "password" not in data:
         return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
-    if (db.user_exists(data["username"])):
+    if (db.user_exists(data)):
         return jsonify({"error": "user already exists"}), BAD_REQUEST_CODE
 
-    user = db.change_user(id_user, data)
+    user = db.add_user(data)
 
     return jsonify(user), SUCCESS_CODE
+
+
+
 
 
 def auth_required(f):
