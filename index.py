@@ -125,37 +125,6 @@ def get_recipe(id_recipe):
     return jsonify(recipe), OK_CODE
 
 
-@app.route("/getSavedRecipes_user/<int:id_user>", methods=['GET'])
-@auth_required
-def get_recipes(id_user):
-    recipes = db.getSaved_recipes(id_user)
-
-    if recipes is None:
-        return jsonify({"Error": "No saved recipes found in this user"}), NOT_FOUND_CODE
-    
-    return jsonify(recipes), OK_CODE
-
-
-@app.route("/addRecipe", methods=['POST'])
-@auth_required
-def add_saved_recipe():
-    data = request.get_json()
-
-    if "name" not in data or "preparation" not in data or "prepTime" not in data or "type" not in data or "picture" not in data or "ingredients" not in data or "idUser" not in data or "idRec" not in data:
-        return jsonify({"Error": "Invalid parameters"}), BAD_REQUEST_CODE
-
-    recipe = db.add_recipe(data)
-
-    return jsonify(recipe), SUCCESS_CODE
-    
-
-@app.route('/deleteRecipe/<int:recipe_id>', methods=['DELETE'])
-@auth_required
-def delete_saved_recipe(recipe_id):
-    if db.remove_recipe(recipe_id):
-        return jsonify({"message": "Recipe removed with success"}), OK_CODE
-    else:
-        return jsonify({"error": "Recipe not found"}), FORBIDDEN_CODE
 
 
 if __name__ == "__main__":
