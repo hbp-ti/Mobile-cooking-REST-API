@@ -11,6 +11,15 @@ app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'mysecretkey')
 
+NOT_FOUND_CODE = 401
+OK_CODE = 200
+SUCCESS_CODE = 201
+NO_CONTENT_CODE = 204
+BAD_REQUEST_CODE = 400
+UNAUTHORIZED_CODE = 401
+FORBIDDEN_CODE = 403
+NOT_FOUND = 404
+SERVER_ERROR = 500
 
 @app.route('/', methods = ["GET"])
 def home():
@@ -52,16 +61,11 @@ def register():
 
 
 @app.route("/changeUser/<int:id_user>", methods=['POST'])
+@auth_required
 def update_user(id_user):
     data = request.get_json()
 
-    if "name" not in data or "email" not in data or "username" not in data or "password" not in data:
-        return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
-    if (db.user_exists(data["username"])):
-        return jsonify({"error": "user already exists"}), BAD_REQUEST_CODE
-
-    user = db.change_user(id_user, data)
 
     return jsonify(user), SUCCESS_CODE
 
