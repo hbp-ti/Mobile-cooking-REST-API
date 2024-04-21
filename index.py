@@ -84,7 +84,7 @@ def auth_required(f):
     return decorated
 
 
-@app.route("/changeUser/<int:id_user>", methods=['POST'])
+@app.route("/changeUser/<int:id_user>", methods=['PUT'])
 @auth_required
 def update_user(id_user):
     data = request.get_json()
