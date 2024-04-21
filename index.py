@@ -51,8 +51,7 @@ def register():
     return jsonify(user), SUCCESS_CODE
 
 
-@app.route('/changeUser/<int:id_user>', methods=['POST'])
-@auth_required
+@app.route("/changeUser/<int:id_user>", methods=['POST'])
 def update_user(id_user):
     data = request.get_json()
 
