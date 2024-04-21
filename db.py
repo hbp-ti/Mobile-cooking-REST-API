@@ -90,7 +90,7 @@ def change_user(id, user):
 		with getConnection() as conn:
 			with conn.cursor() as cur:
 				query = "UPDATE Users SET name = %s, username = %s, email = %s, password = crypt(%s, gen_salt('bf')) WHERE id = %s RETURNING *"
-				cur.execute(query, [user["name"], user["username"], user["email"], user["password"], user["id"]])
+				cur.execute(query, [user["name"], user["username"], user["email"], user["password"], id])
 				conn.commit()
 				userRow = cur.fetchone()
 				user = {
