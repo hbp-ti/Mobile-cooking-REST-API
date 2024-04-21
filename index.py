@@ -19,6 +19,23 @@ def home():
 
 
 
+
+@app.route("/changeUser/<int:id_user>", methods=['POST'])
+@auth_required
+def update_user(id_user):
+    data = request.get_json()
+
+    if "name" not in data or "email" not in data or "username" not in data or "password" not in data:
+        return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
+
+    if (db.user_exists(data["username"])):
+        return jsonify({"error": "user already exists"}), BAD_REQUEST_CODE
+
+    user = db.change_user(id_user, data)
+
+    return jsonify(user), SUCCESS_CODE
+
+
 def auth_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
