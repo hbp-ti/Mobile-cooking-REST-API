@@ -71,6 +71,7 @@ def add_user(user):
 			with conn.cursor() as cur:
 				query = "INSERT INTO Users (name, email, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf'))) RETURNING *"
 				cur.execute(query, [user["name"], user["email"], user["username"], user["password"]])
+				conn.commit()
 				userRow = cur.fetchone()
 				user = {
 					"id": userRow[0],
@@ -78,7 +79,6 @@ def add_user(user):
 					"email": userRow[2],
 					"username": userRow[3],
 				}
-				conn.commit()
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
 	finally:
