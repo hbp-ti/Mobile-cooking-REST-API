@@ -104,7 +104,6 @@ if __name__ == "__main__":
     app.run()
 
 @app.route("/getUser/<string:username>", methods=['GET'])
-@auth_required
 def get_user(username):
     user = db.get_user(username)
 
