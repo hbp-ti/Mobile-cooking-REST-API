@@ -100,9 +100,6 @@ def update_user(id_user):
     return jsonify(user), SUCCESS_CODE
 
 
-if __name__ == "__main__":
-    app.run()
-
 @app.route("/getUser/<string:username>", methods=['GET'])
 @auth_required
 def get_user(username):
