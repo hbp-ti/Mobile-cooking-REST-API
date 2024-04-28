@@ -17,7 +17,7 @@ def login(username, password):
 					return None
 				user = {
 					"id": userRow[0],
-					"username": userRow[5],
+					"username": userRow[3],
 				}
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
