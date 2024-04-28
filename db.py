@@ -50,8 +50,8 @@ def email_exists(user):
     try:
         with getConnection() as conn:
             with conn.cursor() as cur:
-                query = "SELECT * FROM Users WHERE LOWER(email) = LOWER(%s)"
-                cur.execute(query, [user["email"].lower()])
+                query = "SELECT * FROM Users WHERE email = %s"
+                cur.execute(query, [user["email"]])
                 existing_user = cur.fetchone()
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
