@@ -30,7 +30,7 @@ def login(username, password):
 def user_exists(user):
     count = 0
     try:
-        with get_connection() as conn:
+        with getConnection() as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM users WHERE username = %s", [user["username"]])
                 count = cur.rowcount
@@ -41,7 +41,7 @@ def user_exists(user):
 def email_exists(user):
     count = 0
     try:
-        with get_connection() as conn:
+        with getConnection() as conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM users WHERE email = %s", [user["email"]])
                 count = cur.rowcount
