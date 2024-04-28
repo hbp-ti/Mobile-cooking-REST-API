@@ -36,6 +36,10 @@ def user_exists(user):
                 count = cur.rowcount
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
     return count > 0
 
 def email_exists(user):
@@ -47,9 +51,11 @@ def email_exists(user):
                 count = cur.rowcount
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
     return count > 0
-
-
 
 
 def get_user(username):
