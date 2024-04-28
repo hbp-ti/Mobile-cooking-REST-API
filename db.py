@@ -28,8 +28,8 @@ def login(username, password):
 		return user
 
 def user_exists(user):
-	existing_user = None
-	try:
+    existing_user = None
+    try:
         with getConnection() as conn:
             with conn.cursor() as cur:
                 query = "SELECT * FROM Users WHERE username = %s"
@@ -42,6 +42,7 @@ def user_exists(user):
             cur.close()
             conn.close()
     return existing_user is not None
+
 
 
 def email_exists(user):
