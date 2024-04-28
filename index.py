@@ -95,6 +95,9 @@ def update_user(id_user):
     if (db.user_exists(data)):
         return jsonify({"error": "user already exists"}), BAD_REQUEST_CODE
 
+    if (db.email_exists(data)):
+        return jsonify({"error": "email already exists"}), BAD_REQUEST_CODE
+
     user = db.change_user(id_user, data)
 
     return jsonify(user), SUCCESS_CODE
