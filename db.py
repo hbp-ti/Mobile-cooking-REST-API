@@ -29,7 +29,7 @@ def login(username, password):
 
 def user_exists(user):
 	existing_user = None
-    try:
+	try:
         with getConnection() as conn:
             with conn.cursor() as cur:
                 query = "SELECT * FROM Users WHERE username = %s"
