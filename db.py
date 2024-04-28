@@ -52,7 +52,7 @@ def email_exists(user):
                 existing_user = cur.fetchone()
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
-	existing_user = cur.fetchone()
+		existing_user = cur.fetchone()
     finally:
         if conn:
             cur.close()
