@@ -28,6 +28,7 @@ def login(username, password):
 		return user
 
 def user_exists(user):
+	existing_user = None
     try:
         with getConnection() as conn:
             with conn.cursor() as cur:
