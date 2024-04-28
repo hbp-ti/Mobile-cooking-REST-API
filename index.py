@@ -53,10 +53,10 @@ def register():
         return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
     if (db.user_exists(data)):
-        return jsonify({"error": "user already exists"}), BAD_REQUEST_CODE
+        return jsonify({"error": "User already exists"}), BAD_REQUEST_CODE
 
     if (db.email_exists(data)):
-        return jsonify({"error": "email already exists"}), BAD_REQUEST_CODE
+        return jsonify({"error": "Email already exists"}), BAD_REQUEST_CODE
 
     user = db.add_user(data)
 
