@@ -28,32 +28,35 @@ def login(username, password):
 		return user
 
 def user_exists(user):
+    exists = False
     try:
         with getConnection() as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT COUNT(*) FROM users WHERE username = %s", [user["username"]])
-                count = cur.fetchone()[0]
+                cur.execute("SELECT 1 FROM users WHERE username = %s LIMIT 1", [user["username"]])
+                exists = cur.fetchone() is not None
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
     finally:
         if conn:
             cur.close()
             conn.close()
-    return count > 0
+    return exists
 
 def email_exists(user):
+    exists = False
     try:
         with getConnection() as conn:
             with conn.cursor() as cur:
-                cur.execute("SELECT COUNT(*) FROM users WHERE email = %s", [user["email"]])
-                count = cur.fetchone()[0]
+                cur.execute("SELECT 1 FROM users WHERE email = %s LIMIT 1", [user["email"]])
+                exists = cur.fetchone() is not None
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
     finally:
         if conn:
             cur.close()
             conn.close()
-    return count > 0
+    return exists
+
 
 
 
