@@ -58,12 +58,12 @@ def email_exists(user):
     return count > 0
 
 
-def get_user(username):
+def get_user(id):
 	try:
 		with getConnection() as conn:
 			with conn.cursor() as cur:
-				query = "SELECT * FROM Users WHERE username = %s"
-				cur.execute(query, (username,))
+				query = "SELECT * FROM Users WHERE id = %s"
+				cur.execute(query, [id])
 				userRow = cur.fetchone()
 				user = {
 					"id": userRow[0],

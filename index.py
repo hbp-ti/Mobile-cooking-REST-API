@@ -4,7 +4,6 @@ from functools import wraps
 import jwt
 import psycopg2
 from flask import Flask, jsonify, request
-import logging
 
 import db
 
@@ -107,11 +106,10 @@ def update_user(id_user):
     return jsonify(user), SUCCESS_CODE
 
 
-@app.route("/getUser/<string:username>", methods=['GET'])
+@app.route("/getUser/<int:id_user>", methods=['GET'])
 @auth_required
-def get_user(username):
-    logging.info(f"Username: {username}")
-    user = db.get_user(username)
+def get_user(id_user):
+    user = db.get_user(id_user)
 
     if user is None:
         return jsonify({"Error": "No user found"}), NOT_FOUND_CODE
