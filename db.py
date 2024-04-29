@@ -63,7 +63,7 @@ def get_user(username):
 		with getConnection() as conn:
 			with conn.cursor() as cur:
 				query = "SELECT * FROM Users WHERE username = %s"
-				cur.execute(query, [username])
+				cur.execute(query, (username,))
 				userRow = cur.fetchone()
 				user = {
 					"id": userRow[0],
