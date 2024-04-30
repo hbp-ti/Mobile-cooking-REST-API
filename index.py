@@ -104,11 +104,11 @@ def update_user(id_user):
     user = db.change_user(id_user, data)
 
     return jsonify(user), SUCCESS_CODE
-    
+
 
 @app.route("/changePassword/<int:id_user>", methods=['PUT'])
 @auth_required
-def update_user(id_user):
+def update_password(id_user):
     data = request.get_json()
 
     if "password" not in data:
