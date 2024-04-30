@@ -92,7 +92,7 @@ def auth_required(f):
 def update_user(id_user):
     data = request.get_json()
 
-    if "name" not in data or "email" not in data or "username" not in data or "password" not in data:
+    if "name" not in data or "email" not in data or "username" not in data:
         return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
     if (db.user_exists(data)):
@@ -102,6 +102,19 @@ def update_user(id_user):
         return jsonify({"error": "email already exists"}), BAD_REQUEST_CODE
 
     user = db.change_user(id_user, data)
+
+    return jsonify(user), SUCCESS_CODE
+    
+
+@app.route("/changePassword/<int:id_user>", methods=['PUT'])
+@auth_required
+def update_user(id_user):
+    data = request.get_json()
+
+    if "password" not in data:
+        return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
+
+    user = db.change_password(id_user, data)
 
     return jsonify(user), SUCCESS_CODE
 

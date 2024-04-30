@@ -105,8 +105,30 @@ def change_user(id, user):
 	try:
 		with getConnection() as conn:
 			with conn.cursor() as cur:
-				query = "UPDATE Users SET name = %s, username = %s, email = %s, password = crypt(%s, gen_salt('bf')) WHERE id = %s RETURNING *"
-				cur.execute(query, [user["name"], user["username"], user["email"], user["password"], id])
+				query = "UPDATE Users SET name = %s, username = %s, email = %s WHERE id = %s RETURNING *"
+				cur.execute(query, [user["name"], user["username"], user["email"], id])
+				conn.commit()
+				userRow = cur.fetchone()
+				user = {
+					"id": userRow[0],
+					"name": userRow[1],
+					"email": userRow[2],
+					"username": userRow[3],
+				}
+	except (Exception, psycopg2.Error) as error:
+		print("Error while connecting to PostgreSQL", error)
+	finally:
+		if conn:
+			cur.close()
+			conn.close()
+		return user
+
+def change_password(id, user):
+	try:
+		with getConnection() as conn:
+			with conn.cursor() as cur:
+				query = "UPDATE Users SET password = crypt(%s, gen_salt('bf')) WHERE id = %s RETURNING *"
+				cur.execute(query, [user["password"], id])
 				conn.commit()
 				userRow = cur.fetchone()
 				user = {
