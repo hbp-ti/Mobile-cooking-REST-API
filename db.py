@@ -101,6 +101,46 @@ def add_user(user):
 			conn.close()
 	return user
 
+
+def get_user_by_username(username):
+    try:
+        with getConnection() as conn:
+            with conn.cursor() as cur:
+                query = "SELECT * FROM Users WHERE username = %s"
+                cur.execute(query, [username])
+                user_row = cur.fetchone()
+                if user_row:
+                    return {
+                        "id": user_row[0],
+                        "name": user_row[1],
+                        "email": user_row[2],
+                        "username": user_row[3],
+                    }
+                else:
+                    return None
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+
+def get_user_by_email(email):
+    try:
+        with getConnection() as conn:
+            with conn.cursor() as cur:
+                query = "SELECT * FROM Users WHERE email = %s"
+                cur.execute(query, [email])
+                user_row = cur.fetchone()
+                if user_row:
+                    return {
+                        "id": user_row[0],
+                        "name": user_row[1],
+                        "email": user_row[2],
+                        "username": user_row[3],
+                    }
+                else:
+                    return None
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+	
+
 def change_user(id, user):
 	try:
 		with getConnection() as conn:

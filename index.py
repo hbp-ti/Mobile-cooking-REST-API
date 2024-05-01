@@ -95,11 +95,11 @@ def update_user(id_user):
     if "name" not in data or "email" not in data or "username" not in data:
         return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
-    if (db.user_exists(data)):
-        return jsonify({"error": "User already exists"}), BAD_REQUEST_CODE
+    if db.user_exists(data) and db.get_user_by_username(data["username"])["id"] != id_user:
+        return jsonify({"error": "username already exists"}), BAD_REQUEST_CODE
 
-    if (db.email_exists(data)):
-        return jsonify({"error": "Email already exists"}), BAD_REQUEST_CODE
+    if db.email_exists(data) and db.get_user_by_email(data["email"])["id"] != id_user:
+        return jsonify({"error": "email already exists"}), BAD_REQUEST_CODE
 
     user = db.change_user(id_user, data)
 
