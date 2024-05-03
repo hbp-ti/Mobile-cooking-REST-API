@@ -80,27 +80,28 @@ def get_user(id):
 		return user
 
 def add_user(user):
-	try:
-		with getConnection() as conn:
-			with conn.cursor() as cur:
-				query = "INSERT INTO Users (name, email, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf'))) RETURNING *"
-				cur.execute(query, [user["name"], user["email"], user["username"], user["password"]])
-				conn.commit()
-				userRow = cur.fetchone()
-				user = {
-					"id": userRow[0],
-					"name": userRow[1],
-					"email": userRow[2],
-					"username": userRow[3],
-				}
+    try:
+        with getConnection() as conn:
+            with conn.cursor() as cur:
+                query = "INSERT INTO Users (name, email, username, password) VALUES (%s, %s, %s, crypt(%s, gen_salt('bf'))) RETURNING *"
+                cur.execute(query, [user["name"], user["email"], user["username"], user["password"]])
+                conn.commit()
+                userRow = cur.fetchone()
+                user_data = {
+                    "id": userRow[0],
+                    "name": userRow[1],
+                    "email": userRow[2],
+                    "username": userRow[3],
+                }
+                return user_data
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
         if conn:
             conn.rollback()
-	finally:
-		if conn:
-			cur.close()
-			conn.close()
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
 	return user
 
 
