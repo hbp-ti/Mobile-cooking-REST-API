@@ -165,7 +165,7 @@ def change_user(id, user):
         if conn:
             cur.close()
             conn.close()
-    	return user
+        return user
 
 
 def change_password(id, user):
