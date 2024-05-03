@@ -93,8 +93,10 @@ def add_user(user):
 					"email": userRow[2],
 					"username": userRow[3],
 				}
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+        if conn:
+            conn.rollback()
 	finally:
 		if conn:
 			cur.close()
@@ -155,8 +157,10 @@ def change_user(id, user):
 					"email": userRow[2],
 					"username": userRow[3],
 				}
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+        if conn:
+            conn.rollback()
 	finally:
 		if conn:
 			cur.close()
@@ -177,8 +181,10 @@ def change_password(id, user):
 					"email": userRow[2],
 					"username": userRow[3],
 				}
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+        if conn:
+            conn.rollback()
 	finally:
 		if conn:
 			cur.close()
@@ -264,8 +270,10 @@ def add_recipe(recipe):
 					}
 				conn.commit()
 				return recipe
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+        if conn:
+            conn.rollback()
 	finally:
 		if conn:
 			cur.close()
@@ -283,8 +291,10 @@ def remove_recipe(id_recipe):
 				if cur.rowcount > 0:
 				    value = cur.rowcount
 
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+        if conn:
+            conn.rollback()
 	finally:
 		if conn:
 			cur.close()
