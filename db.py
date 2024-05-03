@@ -101,7 +101,7 @@ def add_user(user):
         if conn:
             cur.close()
             conn.close()
-	return user_data
+    return user_data
 
 
 def get_user_by_username(username):
