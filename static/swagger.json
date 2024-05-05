@@ -3,7 +3,7 @@
   "info": {
     "title": "SideChef REST API",
     "description": "API for interacting with the SideChef application",
-    "version": "1.0"
+    "version": "1.2"
   },
   "basePath": "/",
   "tags": [
