@@ -3,7 +3,7 @@
   "info": {
     "title": "SideChef REST API",
     "description": "API for interacting with the SideChef application and database",
-    "version": "1.4"
+    "version": "1.9"
   },
   "basePath": "/",
   "tags": [
@@ -699,43 +699,33 @@
         "parameters": [
           {
             "name": "recipe_id",
+            "type": "integer",
             "in": "path",
             "description": "The ID of the recipe to be deleted",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
+            "required": true
           }
         ],
         "responses": {
           "200": {
             "description": "Recipe removed successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message indicating that the recipe was removed successfully"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Success message indicating that the recipe was removed successfully"
                 }
               }
             }
           },
           "403": {
             "description": "Recipe not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "string",
-                      "description": "Error message indicating that the recipe was not found"
-                    }
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message indicating that the recipe was not found"
                 }
               }
             }
