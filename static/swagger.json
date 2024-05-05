@@ -629,47 +629,45 @@
         "responses": {
           "201": {
             "description": "Recipe added successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer",
-                      "description": "The ID of the added recipe"
-                    },
-                    "name": {
-                      "type": "string",
-                      "description": "The name of the added recipe"
-                    },
-                    "preparation": {
-                      "type": "string",
-                      "description": "The preparation steps of the added recipe"
-                    },
-                    "prepTime": {
-                      "type": "string",
-                      "description": "The preparation time of the added recipe"
-                    },
-                    "type": {
-                      "type": "string",
-                      "description": "The type/category of the added recipe"
-                    },
-                    "picture": {
-                      "type": "string",
-                      "description": "URL to the picture of the added recipe"
-                    },
-                    "ingredients": {
-                      "type": "string",
-                      "description": "List of ingredients of the added recipe"
-                    },
-                    "id_user": {
-                      "type": "integer",
-                      "description": "The ID of the user who added the recipe"
-                    },
-                    "id_recipe": {
-                      "type": "integer",
-                      "description": "The ID of the original recipe associated with the added recipe"
-                    }
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "The ID of the added recipe"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the added recipe"
+                  },
+                  "preparation": {
+                    "type": "string",
+                    "description": "The preparation steps of the added recipe"
+                  },
+                  "prepTime": {
+                    "type": "string",
+                    "description": "The preparation time of the added recipe"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The type/category of the added recipe"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "description": "URL to the picture of the added recipe"
+                  },
+                  "ingredients": {
+                    "type": "string",
+                    "description": "List of ingredients of the added recipe"
+                  },
+                  "id_user": {
+                    "type": "integer",
+                    "description": "The ID of the user who added the recipe"
+                  },
+                  "id_recipe": {
+                    "type": "integer",
+                    "description": "The ID of the original recipe associated with the added recipe"
                   }
                 }
               }
@@ -677,15 +675,13 @@
           },
           "400": {
             "description": "Invalid parameters provided",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "Error": {
-                      "type": "string",
-                      "description": "Error message indicating invalid parameters were provided"
-                    }
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Error": {
+                    "type": "string",
+                    "description": "Error message indicating invalid parameters were provided"
                   }
                 }
               }
