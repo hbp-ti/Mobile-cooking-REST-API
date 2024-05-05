@@ -1,0 +1,370 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "SideChef REST API",
+    "description": "API for interacting with the SideChef application",
+    "version": "1.0"
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Endpoints related to user authentication"
+    },
+    {
+      "name": "Users",
+      "description": "Endpoints related to users"
+    },
+    {
+      "name": "Recipes",
+      "description": "Endpoints related to recipes"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Authenticate a user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User authenticated successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Register a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters or existing user/email"
+          }
+        }
+      }
+    },
+    "/changeUser/{id_user}": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user information",
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information updated successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters or existing user"
+          }
+        }
+      }
+    },
+    "/changePassword/{id_user}": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update user password",
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User password updated successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          }
+        }
+      }
+    },
+    "/getUser/{id_user}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user information",
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User information retrieved successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/getRecipe/{id_recipe}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipe information",
+        "parameters": [
+          {
+            "name": "id_recipe",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe information retrieved successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "404": {
+            "description": "Recipe not found"
+          }
+        }
+      }
+    },
+    "/getSavedRecipes_user/{id_user}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get saved recipes for a user",
+        "parameters": [
+          {
+            "name": "id_user",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Saved recipes retrieved successfully",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "preparation": {
+                    "type": "string"
+                  },
+                  "prepTime": {
+                    "type": "integer"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "picture": {
+                    "type": "string"
+                  },
+                  "ingredients": {
+                    "type": "string"
+                  },
+                  "id_recipe": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No saved recipes found for this user"
+          }
+        }
+      }
+    },
+    "/addRecipe": {
+      "post": {
+        "tags": ["Recipes"],
+        "summary": "Add a recipe to saved recipes",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "preparation": {
+                  "type": "string"
+                },
+                "prepTime": {
+                  "type": "integer"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "picture": {
+                  "type": "string"
+                },
+                "ingredients": {
+                  "type": "string"
+                },
+                "idUser": {
+                  "type": "integer"
+                },
+                "idRec": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Recipe added successfully",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          }
+        }
+      }
+    },
+    "/deleteRecipe/{recipe_id}": {
+      "delete": {
+        "tags": ["Recipes"],
+        "summary": "Remove a saved recipe",
+        "parameters": [
+          {
+            "name": "recipe_id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe removed successfully"
+          },
+          "401": {
+            "description": "Recipe not found"
+          }
+        }
+      }
+    }
+  }
+}

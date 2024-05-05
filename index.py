@@ -4,6 +4,7 @@ from functools import wraps
 import jwt
 import psycopg2
 from flask import Flask, jsonify, request
+from flask_swagger_ui import get_swaggerui_blueprint
 
 import db
 
@@ -20,6 +21,22 @@ UNAUTHORIZED_CODE = 401
 FORBIDDEN_CODE = 403
 NOT_FOUND = 404
 SERVER_ERROR = 500
+
+@app.route('/static/<path:path>')
+def send_static(path):
+    return send_from_directory('static', path)
+
+SWAGGER_URL = '/doc'
+API_URL = '/static/swagger.json'
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "SideChef-REST-API"
+    }
+)
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
 
 @app.route('/', methods = ["GET"])
 def home():
