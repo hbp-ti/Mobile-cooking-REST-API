@@ -580,51 +580,52 @@
         ],
         "summary": "Add a saved recipe",
         "description": "This endpoint allows authenticated users to add a new saved recipe.",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "The name of the recipe"
-                  },
-                  "preparation": {
-                    "type": "string",
-                    "description": "The preparation steps of the recipe"
-                  },
-                  "prepTime": {
-                    "type": "string",
-                    "description": "The preparation time of the recipe"
-                  },
-                  "type": {
-                    "type": "string",
-                    "description": "The type/category of the recipe"
-                  },
-                  "picture": {
-                    "type": "string",
-                    "description": "URL to the picture of the recipe"
-                  },
-                  "ingredients": {
-                    "type": "string",
-                    "description": "List of ingredients of the recipe"
-                  },
-                  "idUser": {
-                    "type": "integer",
-                    "description": "The ID of the user adding the recipe"
-                  },
-                  "idRec": {
-                    "type": "integer",
-                    "description": "The ID of the original recipe associated with the saved recipe"
+        "parameters": [
+          {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the recipe"
+                    },
+                    "preparation": {
+                      "type": "string",
+                      "description": "The preparation steps of the recipe"
+                    },
+                    "prepTime": {
+                      "type": "string",
+                      "description": "The preparation time of the recipe"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The type/category of the recipe"
+                    },
+                    "picture": {
+                      "type": "string",
+                      "description": "URL to the picture of the recipe"
+                    },
+                    "ingredients": {
+                      "type": "string",
+                      "description": "List of ingredients of the recipe"
+                    },
+                    "idUser": {
+                      "type": "integer",
+                      "description": "The ID of the user adding the recipe"
+                    },
+                    "idRec": {
+                      "type": "integer",
+                      "description": "The ID of the original recipe associated with the saved recipe"
+                    }
                   }
                 }
               }
             }
           }
-        },
+        ],
         "responses": {
           "201": {
             "description": "Recipe added successfully",
