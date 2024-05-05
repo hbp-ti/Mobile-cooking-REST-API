@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "title": "SideChef REST API",
-    "description": "API for interacting with the SideChef application",
-    "version": "1.3"
+    "description": "API for interacting with the SideChef application and database",
+    "version": "1.4"
   },
   "basePath": "/",
   "tags": [
@@ -20,6 +20,14 @@
       "description": "Endpoints related to recipes"
     }
   ],
+  "securityDefinitions": {
+    "jwt_token": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "JWT Token for authentication"
+    }
+  },
   "paths": {
     "/login": {
       "post": {
@@ -264,7 +272,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt_token": []
+          }
+        ]
       }
     },
     "/changePassword/{id_user}": {
@@ -338,7 +351,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt_token": []
+          }
+        ]
       }
     },
     "/getUser/{id_user}": {
@@ -394,7 +412,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt_token": []
+          }
+        ]
       }
     },
     "/getRecipe/{id_recipe}": {
@@ -462,7 +485,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt_token": []
+          }
+        ]
       }
     },
     "/getSavedRecipes_user/{id_user}": {
@@ -537,7 +565,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt_token": []
+          }
+        ]
       }
     },
     "/addRecipe": {
@@ -657,7 +690,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt_token": []
+          }
+        ]
       }
     },
     "/deleteRecipe/{recipe_id}": {
@@ -711,7 +749,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "jwt_token": []
+          }
+        ]
       }
     }
   }
