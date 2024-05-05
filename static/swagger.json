@@ -23,22 +23,32 @@
   "paths": {
     "/login": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Authenticate a user",
+        "description": "This endpoint allows a user to log in by providing their username and password. If successful, it returns a JSON object containing the user's information along with a JWT token for authentication in subsequent requests.",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "required": true,
+            "description": "JSON object containing the username and password",
             "schema": {
               "type": "object",
               "properties": {
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's username"
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's password"
                 }
+              },
+              "example": {
+                "username": "example_user",
+                "password": "example_password"
               }
             }
           }
@@ -49,45 +59,86 @@
             "schema": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The user's ID"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "The user's username"
+                },
                 "token": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "JWT token for authentication"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid parameters"
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message indicating the invalid parameters"
+                }
+              }
+            }
           },
           "401": {
-            "description": "Invalid credentials"
+            "description": "Check credentials",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message indicating invalid credentials"
+                }
+              }
+            }
           }
         }
       }
     },
     "/register": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "User Management"
+        ],
         "summary": "Register a new user",
+        "description": "This endpoint allows a new user to register by providing their name, email, username, and password. If successful, it returns a JSON object containing the newly registered user's information.",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "required": true,
+            "description": "JSON object containing the user's information",
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's name"
                 },
                 "email": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's email address"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's desired username"
                 },
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's password"
                 }
+              },
+              "example": {
+                "name": "John Doe",
+                "email": "john@example.com",
+                "username": "johndoe",
+                "password": "example_password"
               }
             }
           }
@@ -96,42 +147,82 @@
           "201": {
             "description": "User registered successfully",
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The ID of the newly registered user"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The user's name"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The user's email address"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "The user's username"
+                }
+              }
             }
           },
           "400": {
-            "description": "Invalid parameters or existing user/email"
+            "description": "Invalid parameters or User already exists",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message indicating the cause of the error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/changeUser/{id_user}": {
       "put": {
-        "tags": ["Users"],
+        "tags": [
+          "User Management"
+        ],
         "summary": "Update user information",
+        "description": "This endpoint allows a user to update their information such as name, email, and username.",
         "parameters": [
           {
             "name": "id_user",
             "in": "path",
             "required": true,
+            "description": "The ID of the user to be updated",
             "type": "integer"
           },
           {
             "name": "body",
             "in": "body",
             "required": true,
+            "description": "JSON object containing the updated user information",
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's updated name"
                 },
                 "email": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's updated email address"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's updated username"
                 }
+              },
+              "example": {
+                "name": "New Name",
+                "email": "new_email@example.com",
+                "username": "new_username"
               }
             }
           }
@@ -140,62 +231,129 @@
           "200": {
             "description": "User information updated successfully",
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The ID of the updated user"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The updated name of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The updated email address of the user"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "The updated username of the user"
+                }
+              }
             }
           },
           "400": {
-            "description": "Invalid parameters or existing user"
+            "description": "Invalid parameters or Username/Email already exists",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message indicating the cause of the error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/changePassword/{id_user}": {
       "put": {
-        "tags": ["Users"],
+        "tags": [
+          "User Management"
+        ],
         "summary": "Update user password",
+        "description": "This endpoint allows a user to update their password.",
         "parameters": [
           {
             "name": "id_user",
             "in": "path",
             "required": true,
+            "description": "The ID of the user whose password is to be updated",
             "type": "integer"
           },
           {
             "name": "body",
             "in": "body",
             "required": true,
+            "description": "JSON object containing the new password",
             "schema": {
               "type": "object",
               "properties": {
                 "password": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The user's new password"
                 }
+              },
+              "example": {
+                "password": "new_password123"
               }
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "User password updated successfully",
+            "description": "Password updated successfully",
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The ID of the user whose password was updated"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The email address of the user"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "The username of the user"
+                }
+              }
             }
           },
           "400": {
-            "description": "Invalid parameters"
+            "description": "Invalid parameters",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Error message indicating the cause of the error"
+                }
+              }
+            }
           }
         }
       }
     },
     "/getUser/{id_user}": {
       "get": {
-        "tags": ["Users"],
-        "summary": "Get user information",
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Get user by ID",
+        "description": "This endpoint retrieves user information by their ID.",
         "parameters": [
           {
             "name": "id_user",
             "in": "path",
             "required": true,
+            "description": "The ID of the user to retrieve",
             "type": "integer"
           }
         ],
@@ -203,24 +361,55 @@
           "200": {
             "description": "User information retrieved successfully",
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The ID of the user"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the user"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "The email address of the user"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "The username of the user"
+                }
+              }
             }
           },
           "404": {
-            "description": "User not found"
+            "description": "No user found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Error": {
+                  "type": "string",
+                  "description": "Error message indicating no user was found"
+                }
+              }
+            }
           }
         }
       }
     },
     "/getRecipe/{id_recipe}": {
       "get": {
-        "tags": ["Recipes"],
-        "summary": "Get recipe information",
+        "tags": [
+          "Recipe Management"
+        ],
+        "summary": "Get recipe by ID",
+        "description": "This endpoint retrieves a recipe by its ID.",
         "parameters": [
           {
             "name": "id_recipe",
             "in": "path",
             "required": true,
+            "description": "The ID of the recipe to retrieve",
             "type": "integer"
           }
         ],
@@ -228,24 +417,67 @@
           "200": {
             "description": "Recipe information retrieved successfully",
             "schema": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The ID of the recipe"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the recipe"
+                },
+                "preparation": {
+                  "type": "string",
+                  "description": "The preparation steps of the recipe"
+                },
+                "prepTime": {
+                  "type": "string",
+                  "description": "The preparation time of the recipe"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The type/category of the recipe"
+                },
+                "picture": {
+                  "type": "string",
+                  "description": "URL to the picture of the recipe"
+                },
+                "ingredients": {
+                  "type": "string",
+                  "description": "List of ingredients of the recipe"
+                }
+              }
             }
           },
           "404": {
-            "description": "Recipe not found"
+            "description": "No recipe found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Error": {
+                  "type": "string",
+                  "description": "Error message indicating no recipe was found"
+                }
+              }
+            }
           }
         }
       }
     },
     "/getSavedRecipes_user/{id_user}": {
       "get": {
-        "tags": ["Recipes"],
-        "summary": "Get saved recipes for a user",
+        "tags": [
+          "Recipe Management"
+        ],
+        "summary": "Get saved recipes by user ID",
+        "description": "This endpoint retrieves saved recipes by user ID.",
         "parameters": [
           {
             "name": "id_user",
             "in": "path",
             "required": true,
+            "description": "The ID of the user whose saved recipes are to be retrieved",
             "type": "integer"
           }
         ],
@@ -258,110 +490,226 @@
                 "type": "object",
                 "properties": {
                   "id": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The ID of the saved recipe"
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The name of the saved recipe"
                   },
                   "preparation": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The preparation steps of the saved recipe"
                   },
                   "prepTime": {
-                    "type": "integer"
+                    "type": "string",
+                    "description": "The preparation time of the saved recipe"
                   },
                   "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The type/category of the saved recipe"
                   },
                   "picture": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "URL to the picture of the saved recipe"
                   },
                   "ingredients": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "List of ingredients of the saved recipe"
                   },
                   "id_recipe": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "The ID of the original recipe associated with the saved recipe"
                   }
                 }
               }
             }
           },
           "404": {
-            "description": "No saved recipes found for this user"
+            "description": "No saved recipes found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Error": {
+                  "type": "string",
+                  "description": "Error message indicating no saved recipes were found for this user"
+                }
+              }
+            }
           }
         }
       }
     },
     "/addRecipe": {
       "post": {
-        "tags": ["Recipes"],
-        "summary": "Add a recipe to saved recipes",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "preparation": {
-                  "type": "string"
-                },
-                "prepTime": {
-                  "type": "integer"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "picture": {
-                  "type": "string"
-                },
-                "ingredients": {
-                  "type": "string"
-                },
-                "idUser": {
-                  "type": "integer"
-                },
-                "idRec": {
-                  "type": "integer"
+        "tags": [
+          "Recipe Management"
+        ],
+        "summary": "Add a saved recipe",
+        "description": "This endpoint allows authenticated users to add a new saved recipe.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the recipe"
+                  },
+                  "preparation": {
+                    "type": "string",
+                    "description": "The preparation steps of the recipe"
+                  },
+                  "prepTime": {
+                    "type": "string",
+                    "description": "The preparation time of the recipe"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The type/category of the recipe"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "description": "URL to the picture of the recipe"
+                  },
+                  "ingredients": {
+                    "type": "string",
+                    "description": "List of ingredients of the recipe"
+                  },
+                  "idUser": {
+                    "type": "integer",
+                    "description": "The ID of the user adding the recipe"
+                  },
+                  "idRec": {
+                    "type": "integer",
+                    "description": "The ID of the original recipe associated with the saved recipe"
+                  }
                 }
               }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "Recipe added successfully",
-            "schema": {
-              "type": "object"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "The ID of the added recipe"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "The name of the added recipe"
+                    },
+                    "preparation": {
+                      "type": "string",
+                      "description": "The preparation steps of the added recipe"
+                    },
+                    "prepTime": {
+                      "type": "string",
+                      "description": "The preparation time of the added recipe"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "The type/category of the added recipe"
+                    },
+                    "picture": {
+                      "type": "string",
+                      "description": "URL to the picture of the added recipe"
+                    },
+                    "ingredients": {
+                      "type": "string",
+                      "description": "List of ingredients of the added recipe"
+                    },
+                    "id_user": {
+                      "type": "integer",
+                      "description": "The ID of the user who added the recipe"
+                    },
+                    "id_recipe": {
+                      "type": "integer",
+                      "description": "The ID of the original recipe associated with the added recipe"
+                    }
+                  }
+                }
+              }
             }
           },
           "400": {
-            "description": "Invalid parameters"
+            "description": "Invalid parameters provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Error": {
+                      "type": "string",
+                      "description": "Error message indicating invalid parameters were provided"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
     "/deleteRecipe/{recipe_id}": {
       "delete": {
-        "tags": ["Recipes"],
-        "summary": "Remove a saved recipe",
+        "tags": [
+          "Recipe Management"
+        ],
+        "summary": "Delete a saved recipe",
+        "description": "This endpoint allows authenticated users to delete a saved recipe by its ID.",
         "parameters": [
           {
             "name": "recipe_id",
             "in": "path",
+            "description": "The ID of the recipe to be deleted",
             "required": true,
-            "type": "integer"
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Recipe removed successfully"
+            "description": "Recipe removed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Success message indicating that the recipe was removed successfully"
+                    }
+                  }
+                }
+              }
+            }
           },
-          "401": {
-            "description": "Recipe not found"
+          "403": {
+            "description": "Recipe not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Error message indicating that the recipe was not found"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
