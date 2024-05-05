@@ -3,7 +3,7 @@
   "info": {
     "title": "SideChef REST API",
     "description": "API for interacting with the SideChef application",
-    "version": "1.2"
+    "version": "1.3"
   },
   "basePath": "/",
   "tags": [
@@ -104,7 +104,7 @@
     "/register": {
       "post": {
         "tags": [
-          "User Management"
+          "Users"
         ],
         "summary": "Register a new user",
         "description": "This endpoint allows a new user to register by providing their name, email, username, and password. If successful, it returns a JSON object containing the newly registered user's information.",
@@ -186,7 +186,7 @@
     "/changeUser/{id_user}": {
       "put": {
         "tags": [
-          "User Management"
+          "Users"
         ],
         "summary": "Update user information",
         "description": "This endpoint allows a user to update their information such as name, email, and username.",
@@ -270,7 +270,7 @@
     "/changePassword/{id_user}": {
       "put": {
         "tags": [
-          "User Management"
+          "Users"
         ],
         "summary": "Update user password",
         "description": "This endpoint allows a user to update their password.",
@@ -344,7 +344,7 @@
     "/getUser/{id_user}": {
       "get": {
         "tags": [
-          "User Management"
+          "Users"
         ],
         "summary": "Get user by ID",
         "description": "This endpoint retrieves user information by their ID.",
@@ -400,7 +400,7 @@
     "/getRecipe/{id_recipe}": {
       "get": {
         "tags": [
-          "Recipe Management"
+          "Recipes"
         ],
         "summary": "Get recipe by ID",
         "description": "This endpoint retrieves a recipe by its ID.",
@@ -468,7 +468,7 @@
     "/getSavedRecipes_user/{id_user}": {
       "get": {
         "tags": [
-          "Recipe Management"
+          "Recipes"
         ],
         "summary": "Get saved recipes by user ID",
         "description": "This endpoint retrieves saved recipes by user ID.",
@@ -543,7 +543,7 @@
     "/addRecipe": {
       "post": {
         "tags": [
-          "Recipe Management"
+          "Recipes"
         ],
         "summary": "Add a saved recipe",
         "description": "This endpoint allows authenticated users to add a new saved recipe.",
@@ -663,7 +663,7 @@
     "/deleteRecipe/{recipe_id}": {
       "delete": {
         "tags": [
-          "Recipe Management"
+          "Recipes"
         ],
         "summary": "Delete a saved recipe",
         "description": "This endpoint allows authenticated users to delete a saved recipe by its ID.",
