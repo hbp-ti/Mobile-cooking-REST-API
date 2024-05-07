@@ -75,9 +75,9 @@ def register():
     if db.email_exists(data):
         return jsonify({"error": "Email already exists"}), BAD_REQUEST_CODE
 
-    user = db.add_user(data)
+    db.add_user(data)
 
-    return jsonify(user), SUCCESS_CODE
+    return "OK", SUCCESS_CODE
 
 
 def auth_required(f):
