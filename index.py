@@ -144,6 +144,7 @@ def get_user(id_user):
     if user is None:
         return jsonify({"Error": "No user found"}), NOT_FOUND_CODE
     
+    print("User:", user)
     return jsonify(user), OK_CODE
 
 
