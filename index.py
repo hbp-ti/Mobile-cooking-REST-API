@@ -93,7 +93,7 @@ def auth_required(f):
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         except jwt.ExpiredSignatureError:
-            return jsonify({"error": "Token expirado", "expired": True}), UNAUTHORIZED_CODE
+            return jsonify({"error": "Token expirado", "expired": True}), UNAUTHORIZED_CODE 
         except jwt.InvalidTokenError:
             return jsonify({"error": "Token inválido"}), FORBIDDEN_CODE
 
