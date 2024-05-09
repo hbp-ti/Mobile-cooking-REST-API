@@ -93,6 +93,7 @@ def add_user(user):
                     "email": userRow[2],
                     "username": userRow[3],
                 }
+                print("T", user_data)
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
         if conn:
