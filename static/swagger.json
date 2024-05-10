@@ -542,15 +542,13 @@
           },
           "404": {
             "description": "Recipes not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "Error": {
-                      "type": "string",
-                      "description": "Error message indicating that no recipes were found"
-                    }
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Error": {
+                    "type": "string",
+                    "description": "Error message indicating that no recipes were found"
                   }
                 }
               }
