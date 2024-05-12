@@ -278,7 +278,7 @@ def getSaved_recipes(id_user):
 			conn.close()
 
 
-def SavedRecipe_exists_(id_recipe, id_user):
+def SavedRecipe_exists(id_recipe, id_user):
     count = 0
     try:        
         with getConnection() as conn:
