@@ -183,11 +183,12 @@ def get_SavedRecipes(id_user):
 @auth_required
 def add_saved_recipe():
     data = request.get_json()
-
+    recipe = None
     if "name" not in data or "preparation" not in data or "prepTime" not in data or "type" not in data or "picture" not in data or "ingredients" not in data or "idUser" not in data or "idRec" not in data:
         return jsonify({"Error": "Invalid parameters"}), BAD_REQUEST_CODE
 
-    recipe = db.add_recipe(data)
+    if not SavedRecipe_exists(data["idRec"], data["idUser"]):
+        recipe = db.add_recipe(data)
 
     return jsonify(recipe), SUCCESS_CODE
 
@@ -195,6 +196,7 @@ def add_saved_recipe():
 @app.route('/deleteRecipe/<int:recipe_id>', methods=['DELETE'])
 @auth_required
 def delete_saved_recipe(recipe_id):
+
     if db.remove_recipe(recipe_id):
         return jsonify({"message": "Recipe removed with success"}), OK_CODE
     else:
