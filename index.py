@@ -52,7 +52,6 @@ def login():
     user = db.login(data['username'], data["password"])
 
     if user is None:
-        print("inside check cred")
         return jsonify({"error": "Check credentials"}), NOT_FOUND_CODE
 
     token = jwt.encode(
