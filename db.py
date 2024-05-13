@@ -264,32 +264,32 @@ def getAllRecipes():
 
 
 def getSaved_recipes(id_user):
-	try:		
-		with getConnection() as conn:
-			with conn.cursor() as cur:
-				query = "SELECT * FROM SavedRecipe WHERE idUser = %s"
-				cur.execute(query, [id_user])
-				rows = cur.fetchall()
-				recipes = None
+    try:        
+        with getConnection() as conn:
+            with conn.cursor() as cur:
+                query = "SELECT * FROM SavedRecipe WHERE idUser = %s"
+                cur.execute(query, [id_user])
+                rows = cur.fetchall()
+                recipes = []
 
-				for recipe in rows:
-					recipe = {
-						"id": recipe[0],
-						"name": recipe[1],
-						"preparation": recipe[2],
-						"prepTime": recipe[3],
-						"type": recipe[4],
-						"picture": recipe[5],
-						"ingredients": recipe[6],
-						"id_recipe": recipe[8],
-					}
-					recipes.append(recipe)
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
-	finally:
-		if conn:
-			cur.close()
-			conn.close()
+                for recipe in rows:
+                    recipe = {
+                        "id": recipe[0],
+                        "name": recipe[1],
+                        "preparation": recipe[2],
+                        "prepTime": recipe[3],
+                        "type": recipe[4],
+                        "picture": recipe[5],
+                        "ingredients": recipe[6],
+                        "id_recipe": recipe[7],
+                    }
+                    recipes.append(recipe)
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
         return recipes
 
 
