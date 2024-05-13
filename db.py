@@ -281,7 +281,7 @@ def getSaved_recipes(id_user):
 						"type": recipe[4],
 						"picture": recipe[5],
 						"ingredients": recipe[6],
-						"id_recipe": recipe[7],
+						"id_recipe": recipe[8],
 					}
 					recipes.append(recipe)
 	except (Exception, psycopg2.Error) as error:
