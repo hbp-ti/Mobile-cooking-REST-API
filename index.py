@@ -186,7 +186,7 @@ def add_saved_recipe():
     if "name" not in data or "preparation" not in data or "prepTime" not in data or "type" not in data or "picture" not in data or "ingredients" not in data or "idUser" not in data or "idRec" not in data:
         return jsonify({"Error": "Invalid parameters"}), BAD_REQUEST_CODE
 
-    if not SavedRecipe_exists(data["idRec"], data["idUser"]):
+    if not db.SavedRecipe_exists(data["idRec"], data["idUser"]):
         recipe = db.add_recipe(data)
 
     return jsonify(recipe), SUCCESS_CODE
