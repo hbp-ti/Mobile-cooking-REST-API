@@ -284,13 +284,13 @@ def getSaved_recipes(id_user):
 						"id_recipe": recipe[7],
 					}
 					recipes.append(recipe)
-				return recipes
 	except (Exception, psycopg2.Error) as error:
 		print("Error while connecting to PostgreSQL", error)
 	finally:
 		if conn:
 			cur.close()
 			conn.close()
+    return recipes
 
 
 def add_recipe(recipe):
