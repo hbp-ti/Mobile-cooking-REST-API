@@ -227,7 +227,6 @@ def getAllRecipes():
                 query="SELECT * FROM Recipe"
                 cur.execute(query)
                 recipes = []
-                recipe = cur.fetchone()
                 for recipe in cur.fetchall():
                     recipe = {
                         "id": recipe[0],
