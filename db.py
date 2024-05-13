@@ -192,6 +192,22 @@ def change_password(id, user):
             conn.close()
         return user
 
+def SavedRecipe_exists(id_recipe, id_user):
+    count = 0
+    try:        
+        with getConnection() as conn:
+            with conn.cursor() as cur:
+                query = "SELECT * FROM SavedRecipe WHERE idrec = %s AND iduser = %s"
+                cur.execute(query, [id_recipe, id_user])
+                count = cur.rowcount
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
+    return count > 0
+
 
 def getRecipe(id_recipe):
 	try:
@@ -275,23 +291,6 @@ def getSaved_recipes(id_user):
 		if conn:
 			cur.close()
 			conn.close()
-
-
-def SavedRecipe_exists(id_recipe, id_user):
-    count = 0
-    try:        
-        with getConnection() as conn:
-            with conn.cursor() as cur:
-                query = "SELECT * FROM SavedRecipe WHERE idrec = %s AND iduser = %s"
-                cur.execute(query, [id_recipe, id_user])
-                count = cur.rowcount
-    except (Exception, psycopg2.Error) as error:
-        print("Error while connecting to PostgreSQL", error)
-    finally:
-        if conn:
-            cur.close()
-            conn.close()
-    return count > 0
 
 
 def add_recipe(recipe):

@@ -161,7 +161,6 @@ def get_recipe(id_recipe):
 @auth_required
 def get_recipes():
     recipes = db.getAllRecipes()
-    print(recipes)
     if recipes is None:
         return jsonify({"Error": "Couldnt get recipes"}), NOT_FOUND_CODE
     
