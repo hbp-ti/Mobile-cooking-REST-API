@@ -297,8 +297,8 @@ def add_recipe(recipe):
     try:        
         with getConnection() as conn:
             with conn.cursor() as cur:
-                query = "INSERT INTO SavedRecipe VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING *"
-                cur.execute(query, [recipe["name"], recipe["preparation"], recipe["prepTime"], recipe["type"], recipe["picture"], recipe["idUser"], recipe["idRec"]])
+                query = "INSERT INTO SavedRecipe (name, preparation, preptime, type, picture, ingredients, iduser, idrec) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING *"
+                cur.execute(query, [recipe["name"], recipe["preparation"], recipe["prepTime"], recipe["type"], recipe["picture"], recipe["ingredients"] ,recipe["idUser"], recipe["idRec"]])
                 recipe = None
                 recipe = cur.fetchone()
 
