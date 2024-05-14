@@ -3,7 +3,7 @@
   "info": {
     "title": "SideChef REST API",
     "description": "API for interacting with the SideChef application and database",
-    "version": "2.6"
+    "version": "2.7"
   },
   "basePath": "/",
   "tags": [
@@ -438,7 +438,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Recipe information retrieved successfully",
+            "description": "Recipes information retrieved successfully",
             "schema": {
               "type": "array",
               "items": {
@@ -477,13 +477,13 @@
             }
           },
           "404": {
-            "description": "No recipe found",
+            "description": "No recipes found",
             "schema": {
               "type": "object",
               "properties": {
                 "Error": {
                   "type": "string",
-                  "description": "Error message indicating no recipe was found"
+                  "description": "Error message indicating no recipes found"
                 }
               }
             }
