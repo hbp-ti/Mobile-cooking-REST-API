@@ -160,7 +160,7 @@ def get_recipes(name_recipe):
 
 @app.route("/getAllRecipes/", methods=['GET'])
 @auth_required
-def get_recipes():
+def get_all_recipes():
     recipes = db.getAllRecipes()
     if recipes is None:
         return jsonify({"Error": "Couldnt get recipes"}), NOT_FOUND_CODE
