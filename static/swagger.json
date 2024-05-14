@@ -3,7 +3,7 @@
   "info": {
     "title": "SideChef REST API",
     "description": "API for interacting with the SideChef application and database",
-    "version": "2.4"
+    "version": "2.6"
   },
   "basePath": "/",
   "tags": [
@@ -420,55 +420,58 @@
         ]
       }
     },
-    "/getRecipe/{id_recipe}": {
+    "/getRecipes/{name}": {
       "get": {
         "tags": [
           "Recipes"
         ],
-        "summary": "Get recipe by ID",
-        "description": "This endpoint retrieves a recipe by its ID.",
+        "summary": "Get recipes containing a word",
+        "description": "This endpoint retrieves a collection of recipes containing the name passed.",
         "parameters": [
           {
-            "name": "id_recipe",
+            "name": "name",
             "in": "path",
             "required": true,
-            "description": "The ID of the recipe to retrieve",
-            "type": "integer"
+            "description": "The name of the word to search",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "Recipe information retrieved successfully",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "description": "The ID of the recipe"
-                },
-                "name": {
-                  "type": "string",
-                  "description": "The name of the recipe"
-                },
-                "preparation": {
-                  "type": "string",
-                  "description": "The preparation steps of the recipe"
-                },
-                "prepTime": {
-                  "type": "string",
-                  "description": "The preparation time of the recipe"
-                },
-                "type": {
-                  "type": "string",
-                  "description": "The type/category of the recipe"
-                },
-                "picture": {
-                  "type": "string",
-                  "description": "URL to the picture of the recipe"
-                },
-                "ingredients": {
-                  "type": "string",
-                  "description": "List of ingredients of the recipe"
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "The ID of the recipe"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the recipe"
+                  },
+                  "preparation": {
+                    "type": "string",
+                    "description": "The preparation steps of the recipe"
+                  },
+                  "prepTime": {
+                    "type": "string",
+                    "description": "The preparation time of the recipe"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "The type/category of the recipe"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "description": "URL to the picture of the recipe"
+                  },
+                  "ingredients": {
+                    "type": "string",
+                    "description": "List of ingredients of the recipe"
+                  }
                 }
               }
             }

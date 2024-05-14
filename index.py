@@ -147,15 +147,16 @@ def get_user(id_user):
     return jsonify(user), OK_CODE
 
 
-@app.route("/getRecipe/<int:id_recipe>", methods=['GET'])
+@app.route("/getRecipes/<string:name_recipe>", methods=['GET'])
 @auth_required
-def get_recipe(id_recipe):
-    recipe = db.getRecipe(id_recipe)
+def get_recipes(name_recipe):
+    recipes = db.getRecipes(name_recipe)
 
-    if recipe is None:
-        return jsonify({"Error": "No Recipe found"}), NOT_FOUND_CODE
+    if recipes is None:
+        return jsonify({"Error": "No Recipes found"}), NOT_FOUND_CODE
     
-    return jsonify(recipe), OK_CODE
+    return jsonify(recipes), OK_CODE
+
 
 @app.route("/getAllRecipes/", methods=['GET'])
 @auth_required
