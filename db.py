@@ -210,30 +210,30 @@ def SavedRecipe_exists(id_recipe, id_user):
 
 
 def getRecipes(name_recipe):
-	try:
-		with getConnection() as conn:
-			with conn.cursor() as cur:
-				query="SELECT * FROM Recipe WHERE name ILIKE CONCAT('%', %s, '%')"
-				cur.execute(query, [name_recipe])
+    try:
+        with getConnection() as conn:
+            with conn.cursor() as cur:
+                query = "SELECT * FROM Recipe WHERE name ILIKE CONCAT('%', %s, '%')"
+                cur.execute(query, [name_recipe])
                 recipes = []
                 for recipe in cur.fetchall():
-    				recipe = {
-    					"id": recipe[0],
-    					"name": recipe[1],
-    					"preparation": recipe[2],
-    					"prepTime": recipe[3],
-    					"type": recipe[4],
-    					"picture": recipe[5],
-    					"ingredients": recipe[6],
-    				}
+                    recipe = {
+                        "id": recipe[0],
+                        "name": recipe[1],
+                        "preparation": recipe[2],
+                        "prepTime": recipe[3],
+                        "type": recipe[4],
+                        "picture": recipe[5],
+                        "ingredients": recipe[6],
+                    }
                     recipes.append(recipe)
-	except (Exception, psycopg2.Error) as error:
-		print("Error while connecting to PostgreSQL", error)
-	finally:
-		if conn:
-			cur.close()
-			conn.close()
-	return recipes
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
+    return recipes
 
 
 def getAllRecipes():
