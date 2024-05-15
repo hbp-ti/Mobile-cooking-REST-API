@@ -214,7 +214,7 @@ def getRecipes(name_recipe):
     try:
         with getConnection() as conn:
             with conn.cursor() as cur:
-                query = "SELECT * FROM Recipe WHERE name ILIKE CONCAT('%', %s, '%')"
+                query = "SELECT id, name, preparation, prepTime, type, picture, ingredients FROM Recipe WHERE name ILIKE CONCAT('%', %s, '%')"
                 cur.execute(query, [name_recipe])
                 for recipe in cur.fetchall():
                     recipe = {
