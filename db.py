@@ -210,6 +210,7 @@ def SavedRecipe_exists(id_recipe, id_user):
 
 
 def getRecipes(name_recipe):
+    print("T", name_recipe)
     recipes = []
     try:
         with getConnection() as conn:
