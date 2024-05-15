@@ -233,7 +233,7 @@ def getRecipes(name_recipe):
         if conn:
             cur.close()
             conn.close()
-    return recipes
+        return recipes
 
 
 def getAllRecipes():
