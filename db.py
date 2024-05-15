@@ -210,7 +210,6 @@ def SavedRecipe_exists(id_recipe, id_user):
 
 
 def getRecipes(name_recipe):
-    print("T", name_recipe)
     recipes = []
     try:
         with getConnection() as conn:
@@ -219,13 +218,13 @@ def getRecipes(name_recipe):
                 cur.execute(query, [name_recipe])
                 for recipe in cur.fetchall():
                     recipe = {
-                        "id": recipe[0],
-                        "name": recipe[1],
-                        "preparation": recipe[2],
-                        "prepTime": recipe[3],
-                        "type": recipe[4],
-                        "picture": recipe[5],
-                        "ingredients": recipe[6],
+                        "id": recipe['id'],
+                        "name": recipe['name'],
+                        "preparation": recipe['preparation'],
+                        "prepTime": recipe['prepTime'],
+                        "type": recipe['type'],
+                        "picture": recipe['picture'],
+                        "ingredients": recipe['ingredients'],
                     }
                     recipes.append(recipe)
     except (Exception, psycopg2.Error) as error:
