@@ -210,6 +210,7 @@ def SavedRecipe_exists(id_recipe, id_user):
 
 
 def getRecipes(name_recipe):
+    recipes = []
     try:
         with getConnection() as conn:
             with conn.cursor() as cur:
@@ -233,7 +234,7 @@ def getRecipes(name_recipe):
         if conn:
             cur.close()
             conn.close()
-        return recipes
+    return recipes
 
 
 def getAllRecipes():
