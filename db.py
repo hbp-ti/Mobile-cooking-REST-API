@@ -215,16 +215,16 @@ def getRecipes(name_recipe):
         with getConnection() as conn:
             with conn.cursor() as cur:
                 query = "SELECT * FROM Recipe WHERE name ILIKE CONCAT('%', %s, '%')"
-                cur.execute(query, [name_recipe])
+                cur.execute(query, (name_recipe))
                 for recipe in cur.fetchall():
                     recipe = {
-                        "id": recipe['id'],
-                        "name": recipe['name'],
-                        "preparation": recipe['preparation'],
-                        "prepTime": recipe['prepTime'],
-                        "type": recipe['type'],
-                        "picture": recipe['picture'],
-                        "ingredients": recipe['ingredients'],
+                        "id": recipe[0],
+                        "name": recipe[1],
+                        "preparation": recipe[2],
+                        "prepTime": recipe[3],
+                        "type": recipe[4],
+                        "picture": recipe[5],
+                        "ingredients": recipe[6],
                     }
                     recipes.append(recipe)
     except (Exception, psycopg2.Error) as error:
