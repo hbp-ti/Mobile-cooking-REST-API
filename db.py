@@ -122,6 +122,10 @@ def get_user_by_username(username):
                     return None
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
 
 def get_user_by_email(email):
     try:
@@ -141,6 +145,10 @@ def get_user_by_email(email):
                     return None
     except (Exception, psycopg2.Error) as error:
         print("Error while connecting to PostgreSQL", error)
+    finally:
+        if conn:
+            cur.close()
+            conn.close()
 	
 
 def change_user(id, user):
