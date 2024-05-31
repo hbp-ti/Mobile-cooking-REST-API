@@ -3,7 +3,7 @@
   "info": {
     "title": "SideChef REST API",
     "description": "API for interacting with the SideChef application and database",
-    "version": "2.7"
+    "version": "2.8"
   },
   "basePath": "/",
   "tags": [
@@ -191,7 +191,7 @@
         }
       }
     },
-    "/changeUser/{id_user}": {
+    "/changeUser": {
       "put": {
         "tags": [
           "Users"
@@ -199,13 +199,6 @@
         "summary": "Update user information",
         "description": "This endpoint allows a user to update their information such as name, email, and username.",
         "parameters": [
-          {
-            "name": "id_user",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user to be updated",
-            "type": "integer"
-          },
           {
             "name": "body",
             "in": "body",
@@ -280,7 +273,7 @@
         ]
       }
     },
-    "/changePassword/{id_user}": {
+    "/changePassword": {
       "put": {
         "tags": [
           "Users"
@@ -288,13 +281,6 @@
         "summary": "Update user password",
         "description": "This endpoint allows a user to update their password.",
         "parameters": [
-          {
-            "name": "id_user",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user whose password is to be updated",
-            "type": "integer"
-          },
           {
             "name": "body",
             "in": "body",
@@ -359,22 +345,14 @@
         ]
       }
     },
-    "/getUser/{id_user}": {
+    "/getUser": {
       "get": {
         "tags": [
           "Users"
         ],
         "summary": "Get user by ID",
         "description": "This endpoint retrieves user information by their ID.",
-        "parameters": [
-          {
-            "name": "id_user",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user to retrieve",
-            "type": "integer"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "User information retrieved successfully",
@@ -545,15 +523,15 @@
           },
           "404": {
             "description": "Recipes not found",
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "Error": {
-                    "type": "string",
-                    "description": "Error message indicating that no recipes were found"
-                  }
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Error": {
+                  "type": "string",
+                  "description": "Error message indicating that no recipes were found"
                 }
               }
+            }
           }
         },
         "security": [
@@ -563,22 +541,14 @@
         ]
       }
     },
-    "/getSavedRecipes_user/{id_user}": {
+    "/getSavedRecipes_user": {
       "get": {
         "tags": [
           "Recipes"
         ],
         "summary": "Get saved recipes by user ID",
         "description": "This endpoint retrieves saved recipes by user ID.",
-        "parameters": [
-          {
-            "name": "id_user",
-            "in": "path",
-            "required": true,
-            "description": "The ID of the user whose saved recipes are to be retrieved",
-            "type": "integer"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "Saved recipes retrieved successfully",
@@ -681,10 +651,6 @@
                 "ingredients": {
                   "type": "string",
                   "description": "List of ingredients of the recipe"
-                },
-                "idUser": {
-                  "type": "integer",
-                  "description": "The ID of the user adding the recipe"
                 },
                 "idRec": {
                   "type": "integer",

@@ -104,42 +104,42 @@ def auth_required(f):
     return decorated
 
 
-@app.route("/changeUser/<int:id_user>", methods=['PUT'])
+@app.route("/changeUser", methods=['PUT'])
 @auth_required
-def update_user(id_user):
+def update_user():
     data = request.get_json()
 
     if "name" not in data or "email" not in data or "username" not in data:
         return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
-    if db.user_exists(data) and db.get_user_by_username(data["username"])["id"] != id_user:
+    if db.user_exists(data) and db.get_user_by_username(data["username"])["id"] != request.user["id"]:
         return jsonify({"error": "Username already exists"}), BAD_REQUEST_CODE
 
-    if db.email_exists(data) and db.get_user_by_email(data["email"])["id"] != id_user:
+    if db.email_exists(data) and db.get_user_by_email(data["email"])["id"] != request.user["id"]:
         return jsonify({"error": "Email already exists"}), BAD_REQUEST_CODE
 
-    user = db.change_user(id_user, data)
+    user = db.change_user(request.user["id"], data)
 
     return jsonify(user), SUCCESS_CODE
 
 
-@app.route("/changePassword/<int:id_user>", methods=['PUT'])
+@app.route("/changePassword", methods=['PUT'])
 @auth_required
-def update_password(id_user):
+def update_password():
     data = request.get_json()
 
     if "password" not in data:
         return jsonify({"error": "invalid parameters"}), BAD_REQUEST_CODE
 
-    user = db.change_password(id_user, data)
+    user = db.change_password(request.user["id"], data)
 
     return jsonify(user), SUCCESS_CODE
 
 
-@app.route("/getUser/<int:id_user>", methods=['GET'])
+@app.route("/getUser", methods=['GET'])
 @auth_required
-def get_user(id_user):
-    user = db.get_user(id_user)
+def get_user():
+    user = db.get_user(request.user["id"])
 
     if user is None:
         return jsonify({"Error": "No user found"}), NOT_FOUND_CODE
@@ -168,10 +168,10 @@ def get_all_recipes():
     return jsonify(recipes), OK_CODE
 
 
-@app.route("/getSavedRecipes_user/<int:id_user>", methods=['GET'])
+@app.route("/getSavedRecipes_user", methods=['GET'])
 @auth_required
-def get_SavedRecipes(id_user):
-    recipes = db.getSaved_recipes(id_user)
+def get_SavedRecipes():
+    recipes = db.getSaved_recipes(request.user["id"])
 
     if recipes is None:
         return jsonify({"Error": "No saved recipes found in this user"}), NOT_FOUND_CODE
@@ -184,9 +184,9 @@ def get_SavedRecipes(id_user):
 def add_saved_recipe():
     data = request.get_json()
     recipe = None
-    if "name" not in data or "preparation" not in data or "prepTime" not in data or "type" not in data or "picture" not in data or "ingredients" not in data or "idUser" not in data or "idRec" not in data:
+    if "name" not in data or "preparation" not in data or "prepTime" not in data or "type" not in data or "picture" not in data or "ingredients" not in data or "idRec" not in data:
         return jsonify({"Error": "Invalid parameters"}), BAD_REQUEST_CODE
-
+    data["idUser"] = request.user["id"]
     if not db.SavedRecipe_exists(data["idRec"], data["idUser"]):
         recipe = db.add_recipe(data)
 
@@ -197,7 +197,7 @@ def add_saved_recipe():
 @auth_required
 def delete_saved_recipe(recipe_id):
 
-    if db.remove_recipe(recipe_id):
+    if db.remove_recipe(recipe_id, request.user["id"]):
         return jsonify({"message": "Recipe removed with success"}), OK_CODE
     else:
         return jsonify({"error": "Recipe not found"}), FORBIDDEN_CODE

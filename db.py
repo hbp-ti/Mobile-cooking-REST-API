@@ -333,12 +333,12 @@ def add_recipe(recipe):
             conn.close()
 
 
-def remove_recipe(id_recipe):
+def remove_recipe(id_recipe, idUser):
     try:        
         with getConnection() as conn:
             with conn.cursor() as cur:
-                query = "DELETE FROM SavedRecipe WHERE id = %s"
-                cur.execute(query, [id_recipe])
+                query = "DELETE FROM SavedRecipe WHERE id = %s AND iduser = %s "
+                cur.execute(query, [id_recipe, idUser])
                 conn.commit()
 
                 value = None
