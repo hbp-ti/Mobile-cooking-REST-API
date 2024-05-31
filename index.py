@@ -12,14 +12,13 @@ app = Flask(__name__)
 app.debug = True
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'mysecretkey')
 
-NOT_FOUND_CODE = 401
+NOT_FOUND_CODE = 404
 OK_CODE = 200
 SUCCESS_CODE = 201
 NO_CONTENT_CODE = 204
 BAD_REQUEST_CODE = 400
 UNAUTHORIZED_CODE = 401
 FORBIDDEN_CODE = 403
-NOT_FOUND = 404
 SERVER_ERROR = 500
 
 @app.route('/static/<path:path>')
